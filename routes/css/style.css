@@ -256,3 +256,9 @@ nav i {
     align-items: center;
     font-size: large;
   }
+
+  /* Form css */
+
+  #address {
+    border-radius: 5px;
+  }
