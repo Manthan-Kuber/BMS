@@ -5,7 +5,7 @@ const Currency = mongoose.Types.Currency;
 
 const accountSchema = new Schema({
     accountNo: {
-        type: Number,
+        type: String,
         min: 10,
         max: 10,
         required: true
@@ -23,6 +23,10 @@ const accountSchema = new Schema({
     accountName: {
         type: String,
         required: true
+    },
+    accountHolder: {
+        type: mongoose.Schema.Types.firstname,
+        ref: 'User'
     },
     branch: {
         type: mongoose.Schema.Types.ObjectId,

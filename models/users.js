@@ -36,10 +36,10 @@ const userSchema = new Schema({
     age: {
         type: Number
     },
-    account: {
+    accounts: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Account'
-    }
+    }]
 });
 
 userSchema.plugin(passportLocalMongoose);

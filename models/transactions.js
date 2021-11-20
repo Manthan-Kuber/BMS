@@ -4,13 +4,13 @@ require('mongoose-currency').loadType(mongoose);
 const Currency = mongoose.Types.Currency;
 
 const TransactionSchema = new Schema({
+    senderAccount: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Account'
+    },
     Amount: {
         type: Currency,
         min: 0,
-        required: true
-    },
-    dateAndTime: {
-        type: String,
         required: true
     },
     transactionType: {
@@ -21,12 +21,13 @@ const TransactionSchema = new Schema({
         type: String,
         required: true
     },
-    account: {
+    recipientAccount: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Account'
     } 
-},
-{timestamps: true});
+}, {
+    timestamps: true
+});
 
 const Transactions = mongoose.model('Transaction', TransactionSchema);
 module.exports = Transactions;
