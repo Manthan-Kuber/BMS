@@ -10,10 +10,6 @@ const accountSchema = new Schema({
         max: 10,
         required: true
     },
-    accountType: {
-        type: String,
-        required: true
-    },
     currentBalance: {
         type: Currency,
         required: true,
@@ -25,7 +21,7 @@ const accountSchema = new Schema({
         required: true
     },
     accountHolder: {
-        type: mongoose.Schema.Types.firstname,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
     branch: {

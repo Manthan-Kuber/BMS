@@ -69,7 +69,7 @@ router.post('/account', authenticate.verifyUser, (req, res, next) => {
   var accNo = Math.floor((Math.random() * 9999999999) + 999999999);
   Branch.findOne({Name: req.body.branch})
   .then((branch) => {
-    Account.create({accountNo: accNo, accountType: req.body.accountType, accountName: req.body.accountName, accountHolder: req.user._id, branch: branch._id})
+    Account.create({accountNo: accNo, accountName: req.body.accountName, accountHolder: req.user._id, branch: branch._id})
     .then((account) => {
       res.statusCode = 200;
       res.setHeader('Content-Type', 'application/json');
