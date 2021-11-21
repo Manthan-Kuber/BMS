@@ -1,6 +1,7 @@
 import { React, Component } from "react";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
+import Dashboard from "./Dashboard/DashboardComponent"
 
 class Home extends Component {
   constructor(props) {
@@ -10,8 +11,9 @@ class Home extends Component {
     return (
       <>
         <Header />
+        <Dashboard />
         <div class="section-container">
-          <p> The site is under construction, Sorry for the inconvinience.</p>
+          <p> The site is under construction, Sorry for the inconvenience.</p>
         </div>
         <Footer />
       </>

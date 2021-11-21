@@ -196,8 +196,8 @@ nav i {
   }
   
   .btn:hover {
-    background-color: #535658;
-    box-shadow: inset 5px 5px 10px #05050578, inset -5px -5px 10px #9e9c9c;
+    background-color: #ecf0f6;
+    box-shadow: inset 5px 5px 10px #d8e2e2, inset -5px -5px 10px #d8e2e6;
   }
   
   /* .social {
@@ -250,13 +250,96 @@ nav i {
   }
 
   .section-container p{
-    display: flex;
+    flex: 1;
     margin: 1rem;
     text-align: center;
     align-items: center;
     font-size: large;
   }
 
+  .footer-copyright {
+    flex: 1;
+    margin-top: 2rem;
+  }
+
   .a {
+    text-decoration: none;;
+  }
+
+  /* Navbar CSS */
+
+  .nav-item{
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-gap: 10px;
+    list-style: none;
+    text-align: center; 
+    justify-content: center;
+    margin: 1rem;
+    width: 10vw;
+    background-color: grey;
+    padding: 0.3rem;
+    border-radius:3px;
+  }
+
+  .nav-item a {
+    color: white;
     text-decoration: none;
+  }
+
+  .nav-item :hover{
+    color: black;
+  }
+
+  .container-fluid a {
+    color: white;
+    font-size: 1rem;
+  }
+  
+
+  a.nav-link, a.nav-link:hover {
+    font-size: 1.5rem; 
+    color: lightgrey; 
+  }
+
+  /* Dashboard CSS */
+  .section-main {
+    text-align: center;
+    flex: 1;
+    margin-top: 30px;
+    margin-inline: 30rem;
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    grid-gap: 10px;
+    list-style: none;
+    text-align: center; 
+    justify-content: center;
+    width: 24rem;
+  }
+
+  .actions li {
+    border: 2px solid black;
+    padding: 5px;
+  }
+
+  .accountUser {
+    margin: 1rem;
+    background-color: #cbced1;
+  }
+
+  .accountDetails {
+    display: flex;
+    flex:1;
+    align-content: center;
+    justify-content: center;
+    height: inherit;
+    color: #858686;
+    margin: 10px;
+    background-color: #ecf0f3;
+    outline: none;
+    border-radius: 20px;
+    box-shadow: inset 5px 5px 5px #cbced1, inset -5px -2px 5px #999898;
   }
