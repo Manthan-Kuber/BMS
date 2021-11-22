@@ -40,9 +40,11 @@ class LogIn extends Component {
                 />
               </div>
             </div>
-            <button type="button" class="btn">
-              Login
-            </button>
+            <div className="col-md-12 text-center">
+              <button type="button" class="btn btn-dark">
+                Login
+              </button>
+            </div>
             <p class="text-center mt-3">
               If you don't have an account, please <a href="/signup">Sign Up</a>
             </p>
