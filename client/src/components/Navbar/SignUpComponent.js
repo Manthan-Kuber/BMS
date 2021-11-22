@@ -15,7 +15,6 @@ class SignUp extends Component {
       Contact: "",
       address: "",
       password: "",
-      confirmpassword: "",
       touched: {
         firstname: false,
         lastname: false,
@@ -25,7 +24,6 @@ class SignUp extends Component {
         Contact: false,
         address: false,
         password: false,
-        confirmpassword: false,
       },
     };
     this.handleSignUp = this.handleSignUp.bind(this);
@@ -67,7 +65,6 @@ class SignUp extends Component {
     aadharNo,
     Contact,
     password,
-    confirmpassword
   ) {
     const errors = {
       firstname: "",
@@ -78,7 +75,6 @@ class SignUp extends Component {
       Contact: "",
       address: "",
       password: "",
-      confirmpassword: "",
     };
 
     if (this.state.touched.firstname && firstname.length < 3) {
@@ -94,16 +90,16 @@ class SignUp extends Component {
     }
 
     // Regular expression to ensure that the telephone number only consists of integers
-    const reg = /^[0-9]*$/;
+    const reg = /^[\d]*$/;
     if (this.state.touched.Contact && !reg.test(Contact)) {
       errors.Contact = "Tel. Number should contain only numbers";
-    } else if (this.state.touched.Contact && Contact.length != 10) {
+    } else if (this.state.touched.Contact && Contact.length !== 10) {
       errors.Contact = "Tel. Number should contain exactly 10 digits";
     }
 
     if (this.state.touched.aadharNo && !reg.test(aadharNo)) {
       errors.aadharNo = "Aadhar Number should contain only numbers";
-    } else if (this.state.touched.aadharNo && aadharNo.length != 11) {
+    } else if (this.state.touched.aadharNo && aadharNo.length !== 11) {
       errors.aadharNo = "Aadhar Number should contain exactly 11 digits";
     }
 
@@ -112,17 +108,6 @@ class SignUp extends Component {
       emailAddress.split("").filter((x) => x === "@").length !== 1
     ) {
       errors.emailAddress = "Email should contain a @";
-    }
-
-    if ( this.state.touched.password && this.state.touched.confirmpassword){
-      errors.confirmpassword = " Entered Password Does not match "
-      const { password, confirmPassword } = this.state.touched;
-    // perform all neccassary validations
-    if (password != confirmPassword) {
-        alert("Passwords don't match");
-    } else {
-        // make API call
-    }
     }
     
     
@@ -139,7 +124,7 @@ class SignUp extends Component {
       this.state.Contact,
       this.state.address,
       this.state.password,
-      this.state.confirmpassword
+      this.stat
     );
     return (
       <>
@@ -279,22 +264,6 @@ class SignUp extends Component {
                   invalid={errors.password !== ""}
                 />
                 <small style={{color:'red'}}>{errors.password}</small>
-              </div>
-              <div class="mb-3">
-                <label for="confirmPassword">Confirm Password</label>
-                <input
-                  type="password"
-                  id="confirmpassword"
-                  name="confirmpassword"
-                  class="form-control"
-                  placeholder="Confirm Password"
-                  onChange={this.handleInputChange}
-                  onBlur={this.handleBlur("confirmpassword")}
-                  value={this.state.confirmpassword}
-                  valid={errors.confirmpassword === ""}
-                  invalid={errors.confirmpassword !== ""}
-                />
-                <small style={{color:'red'}}>{errors.confirmpassword}</small>
               </div>
             </div>
             <div className="col-md-12 text-center ">
