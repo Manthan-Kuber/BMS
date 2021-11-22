@@ -6,13 +6,12 @@ const Currency = mongoose.Types.Currency;
 const accountSchema = new Schema({
     accountNo: {
         type: String,
-        min: 10,
-        max: 10,
+        minlength: 10,
+        maxlength: 10,
         required: true
     },
     currentBalance: {
         type: Currency,
-        required: true,
         default: 0,
         min: 0
     },
@@ -23,10 +22,6 @@ const accountSchema = new Schema({
     accountHolder: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    },
-    branch: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Branch'
     }
 });
 

@@ -18,8 +18,7 @@ const TransactionSchema = new Schema({
         required: true
     },
     description: {
-        type: String,
-        required: true
+        type: String
     },
     recipientAccount: {
         type: mongoose.Schema.Types.ObjectId,

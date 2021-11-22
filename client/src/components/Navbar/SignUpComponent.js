@@ -54,7 +54,7 @@ class SignUp extends Component {
           alert(result.status);
         }
         else {
-          alert("Error");
+          alert(result);
         }
       }); 
     });

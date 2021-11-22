@@ -35,10 +35,9 @@ var User = new Schema({
         type: Number,
         min: 18
     },
-    accounts: {
-        type: [ mongoose.Schema.Types.ObjectId ],
+    account: {
+        type: mongoose.Schema.Types.ObjectId ,
         ref: 'Account',
-        default: []
     }
 });
 

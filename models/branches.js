@@ -12,8 +12,8 @@ const branchSchema = new Schema({
     },
     IFSC: {
         type: String,
-        minlength: 11,
-        maxlength: 11,
+        minlength: 6,
+        maxlength: 6,
         required: true
     }
 });

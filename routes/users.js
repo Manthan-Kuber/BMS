@@ -42,10 +42,22 @@ router.post('/signup', (req, res, next) => {
           res.json({err: err});
         }
         passport.authenticate('local')(req, res, () => {
-          res.statusCode = 200;
-          res.setHeader('Content-Type', 'application/json');
-          res.end(JSON.stringify({success: true, status: 'Registration Successful!'}));
-          console.log(res);
+          var accNo = Math.floor((Math.random() * 9999999999) + 999999999);
+          Account.create({accountNo: accNo, accountName: user.firstname+user.lastname, accountHolder: req.user._id})
+          .then((account) => {
+            user.account = account._id;
+            user.save((err, user) => {
+              if (err) {
+                res.statusCode = 500;
+                res.setHeader('Content-Type', 'application/json');
+                res.json({err: err});
+              }
+            });
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({success:true, status: "Registration Successful"});
+          }, (err) => next(err))
+          .catch((err) => {next(err)});
       });
       });
     }
@@ -65,36 +77,5 @@ router.get('/logout', (req, res, next) => {
   res.redirect('/');
 });
 
-//Account Creation. Make an account creation form on dashboard or provide link for it. 
-//Allow user to input accountName, accountType and let him choose branch from available 
-//branches in our database via a drop down menu
-router.post('/account', authenticate.verifyUser, (req, res, next) => {
-  var accNo = Math.floor((Math.random() * 9999999999) + 999999999);
-  Branch.findOne({Name: req.body.branch})
-  .then((branch) => {
-    Account.create({accountNo: accNo, accountName: req.body.accountName, accountHolder: req.user._id, branch: branch._id})
-    .then((account) => {
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'application/json');
-      res.json(account);
-    }, err => next(err))
-    .catch((err) => {next(err)});
-  }, err => next(err))
-  .catch((err) => {next(err)});
-});
-
-//To get all accounts of the logged in user.
-//Use this for transactions.
-//Also use this to show user all details of all his accounts.
-router.get('/account', authenticate.verifyUser, (req, res, next) => {
-  User.findById(req.user._id)
-  .populate('Account')
-  .then((user) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
-    res.json(user.accounts);
-  }, err => next(err))
-  .catch((err) => {next(err)});
-});
 
 module.exports = router;

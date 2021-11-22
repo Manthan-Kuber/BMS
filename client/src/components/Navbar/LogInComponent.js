@@ -1,6 +1,7 @@
 import { React, Component } from "react";
 import Footer from "../FooterComponent";
 import Header from "../HeaderComponent";
+import { Link } from "react-router-dom";
 
 class LogIn extends Component {
   constructor(props) {
@@ -118,9 +119,10 @@ class LogIn extends Component {
               </div>
             </div>
             <div className="col-md-12 text-center">
-              <button type="button" class="btn btn-dark">
+            <Link to='/dashboard'><button type="button" class="btn btn-dark">
                 Login
-              </button>
+              </button></Link>
+              
             </div>
             <p class="text-center mt-3">
               If you don't have an account, please <a href="/signup">Sign Up</a>

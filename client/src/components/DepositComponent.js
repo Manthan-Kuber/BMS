@@ -6,7 +6,28 @@ class Deposit extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      amount: 0
     };
+  }
+
+  submit_task(data) {
+    fetch("http://localhost:3000/transactions/deposit", {
+      method: "POST",
+      headers: {
+        'Content-Type': "application/json",
+        'Authorization': `bearer` 
+      },
+      body: JSON.stringify(data),
+    }).then((res) => {
+      res.json().then(result => {
+        if (result) {
+          alert(result);
+        }
+        else {
+          alert("Error");
+        }
+      }); 
+    });
   }
 
   render() {
@@ -28,23 +49,13 @@ class Deposit extends Component {
                     name="deposit"
                     class="form-control"
                     placeholder="Enter Amount"
+                    value={this.state.amount}
                   />
                 </div>
               </div>
             </div>
-            <div class="form-group">
-              <div class="mb-3">
-                  <label for="account">Choose an account: </label> <br />
-                    <select name="account" id="account">
-                    <option value="acc1">Account 1</option>
-                    <option value="acc2">Account 2</option>
-                    <option value="acc3">Account 3</option>
-                    <option value="acc4">Account 4</option>
-                    </select>
-              </div>
-            </div>
             <div className="col-md-12 text-center">
-              <button type="button" class="btn btn-primary">
+              <button type="button" class="btn btn-primary" onClick={this.submit_task(this.state)}>
                 Deposit
               </button>
             </div>
