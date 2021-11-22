@@ -32,7 +32,6 @@ transactionRouter.get('/', authenticate.verifyUser, (req, res, next) => {
 transactionRouter.post('/withdraw', authenticate.verifyUser, (req, res, next) => {
     User.findById(req.user._id)
     .then((user) => {
-<<<<<<< HEAD
         Account.findById(user.account)
         .then((account) => {
             if (account.currentBalance >= req.body.amount) {
@@ -55,31 +54,6 @@ transactionRouter.post('/withdraw', authenticate.verifyUser, (req, res, next) =>
                         res.json({err: err});
                       }
                 });
-=======
-            Transaction.create({senderAcount: user.account, Amount: req.body.amount, transactionType: "Withdraw"})
-            .then((transaction) => {
-                if (req.body.description){
-                    transaction.description = req.body.description;
-                    transaction.save((err, transaction) => {
-                        if (err) {
-                            res.statusCode = 500;
-                            res.setHeader('Content-Type', 'application/json');
-                            res.json({err: err});
-                        }
-                    });
-                }
-                Account.findById(user.account)
-                .then((account) => {
-                    account.currentBalance -= req.body.amount;
-                    account.save((err, account) => {
-                        if (err) {
-                            res.statusCode = 500;
-                            res.setHeader('Content-Type', 'application/json');
-                            res.json({err: err});
-                          }
-                    });
-                })
->>>>>>> 26b07f1a1935e751f87251ab7d69e6c3988af7af
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
                 res.json(transaction);
@@ -102,7 +76,6 @@ transactionRouter.post('/withdraw', authenticate.verifyUser, (req, res, next) =>
 transactionRouter.post('/deposit', authenticate.verifyUser, (req, res, next) => {
     User.findById(req.user._id)
     .then((user) => {
-<<<<<<< HEAD
         Account.findById(user.account)
         .then((account) => {
                 Transaction.create({senderAccount: account._id, Amount: req.body.amount, transactionType: "Deposit"})
@@ -124,31 +97,6 @@ transactionRouter.post('/deposit', authenticate.verifyUser, (req, res, next) => 
                         res.json({err: err});
                       }
                 });
-=======
-            Transaction.create({senderAcount: user.account, Amount: req.body.amount, transactionType: "Deposit"})
-            .then((transaction) => {
-                if (req.body.description) {
-                    transaction.description = req.body.description;
-                    transaction.save((err, transaction) => {
-                        if (err) {
-                            res.statusCode = 500;
-                            res.setHeader('Content-Type', 'application/json');
-                            res.json({err: err});
-                        }
-                    });
-                }
-                Account.findById(user.account)
-                .then((account) => {
-                    account.currentBalance += req.body.amount;
-                    account.save((err, account) => {
-                        if (err) {
-                            res.statusCode = 500;
-                            res.setHeader('Content-Type', 'application/json');
-                            res.json({err: err});
-                          }
-                    });
-                })
->>>>>>> 26b07f1a1935e751f87251ab7d69e6c3988af7af
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
                 res.json(transaction);
