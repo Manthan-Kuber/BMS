@@ -1,5 +1,5 @@
 var express = require('express');
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 var User = require('../models/users');
 var Account = require('../models/accounts');
 var Branch = require('../models/branches');
@@ -17,15 +17,16 @@ router.post('/signup', (req, res, next) => {
     if (err) {
       res.statusCode = 500;
       res.setHeader('Content-Type', 'application/json');
-      res.json({err: err});
+      // res.json({err: err});
+      return next(err);
     }
     else {
-      var age = Math.floor( yearsFromNow( req.body.dob ) );
-      if (age < 18) {
-        err = new Error("You are not eligible to create an account");
-        err.status = 403;
-        return next(err);
-      }
+      // var age = Math.floor( yearsFromNow( req.body.dob ) );
+      // if (age < 18) {
+      //   err = new Error("You are not eligible to create an account");
+      //   err.status = 403;
+      //   return next(err);
+      // }
       user.firstname = req.body.firstname;
       user.lastname = req.body.lastname;
       user.aadharNo = req.body.aadharNo;
@@ -33,7 +34,7 @@ router.post('/signup', (req, res, next) => {
       user.Contact = req.body.Contact;
       user.address = req.body.address;
       user.dob = req.body.dob;
-      user.age = age;
+      // user.age = age;
       user.save((err, user) => {
         if (err) {
           res.statusCode = 500;
