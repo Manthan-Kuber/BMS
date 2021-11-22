@@ -13,15 +13,18 @@ var User = new Schema({
     },
     aadharNo: {
         type: String,
-        default: ''
+        default: '',
+        unique: true
     },
     emailAddress: {
         type: String,
-        default: ''
+        default: '',
+        unique: true
     },
     contact: {
         type: String,
-        default: ''
+        default: '',
+        unique: true
     },
     address: {
         type: String,

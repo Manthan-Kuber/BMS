@@ -6,8 +6,8 @@ class Transfer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Transfer: "",
-      password: ""
+      amount: "",
+      recipientAccount: ""
     };
   }
 

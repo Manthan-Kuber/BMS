@@ -41,6 +41,7 @@ class SignUp extends Component {
       [event.target.name]: event.target.value,
     });
   };
+  
   submit_task(data) {
     fetch("http://localhost:3000/users/signup", {
       method: "POST",

@@ -6,8 +6,13 @@ class Withdraw extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      amount: 0
+      amount: 0,
+      token: ""
     };
+  }
+
+  componentDidMount() {
+    this.setState({token: localStorage.getItem("token")})
   }
 
   submit_task(data) {
@@ -15,7 +20,7 @@ class Withdraw extends Component {
       method: "POST",
       headers: {
         'Content-Type': "application/json",
-        'Authorization': `bearer`
+        'Authorization': `bearer ${this.state.token}`
       },
       body: JSON.stringify(data),
     }).then((res) => {

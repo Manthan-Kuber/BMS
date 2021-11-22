@@ -32,8 +32,11 @@ transactionRouter.get('/', authenticate.verifyUser, (req, res, next) => {
 transactionRouter.post('/withdraw', authenticate.verifyUser, (req, res, next) => {
     User.findById(req.user._id)
     .then((user) => {
-            Transaction.create({senderAcount: user.account, Amount: req.body.amount, transactionType: "Withdraw"})
-            .then((transaction) => {
+        Account.findById(user.account)
+        .then((account) => {
+            if (account.currentBalance >= req.body.amount) {
+                Transaction.create({senderAccount: account._id, Amount: req.body.amount, transactionType: "Withdraw"})
+                .then((transaction) => {
                 if (req.body.description)
                 transaction.description = req.body.description;
                 transaction.save((err, transaction) => {
@@ -43,22 +46,27 @@ transactionRouter.post('/withdraw', authenticate.verifyUser, (req, res, next) =>
                         res.json({err: err});
                       }
                 });
-                Account.findById(user.account)
-                .then((account) => {
-                    account.currentBalance -= req.body.amount;
-                    account.save((err, account) => {
-                        if (err) {
-                            res.statusCode = 500;
-                            res.setHeader('Content-Type', 'application/json');
-                            res.json({err: err});
-                          }
-                    });
-                })
+                account.currentBalance -= req.body.amount;
+                account.save((err, account) => {
+                    if (err) {
+                        res.statusCode = 500;
+                        res.setHeader('Content-Type', 'application/json');
+                        res.json({err: err});
+                      }
+                });
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
                 res.json(transaction);
             }, err => next(err))
             .catch((err) => {next(err)});
+            }
+            else {
+                res.statusCode = 403;
+                res.setHeader('Content-Type', 'application/json');
+                res.json({err: "You have insufficient balance"});
+            }
+        })
+            
     }, err => next(err))
     .catch((err) => {next(err)});
 });
@@ -68,8 +76,10 @@ transactionRouter.post('/withdraw', authenticate.verifyUser, (req, res, next) =>
 transactionRouter.post('/deposit', authenticate.verifyUser, (req, res, next) => {
     User.findById(req.user._id)
     .then((user) => {
-            Transaction.create({senderAcount: user.account, Amount: req.body.amount, transactionType: "Deposit"})
-            .then((transaction) => {
+        Account.findById(user.account)
+        .then((account) => {
+                Transaction.create({senderAccount: account._id, Amount: req.body.amount, transactionType: "Deposit"})
+                .then((transaction) => {
                 if (req.body.description)
                 transaction.description = req.body.description;
                 transaction.save((err, transaction) => {
@@ -79,22 +89,21 @@ transactionRouter.post('/deposit', authenticate.verifyUser, (req, res, next) => 
                         res.json({err: err});
                       }
                 });
-                Account.findById(user.account)
-                .then((account) => {
-                    account.currentBalance += req.body.amount;
-                    account.save((err, account) => {
-                        if (err) {
-                            res.statusCode = 500;
-                            res.setHeader('Content-Type', 'application/json');
-                            res.json({err: err});
-                          }
-                    });
-                })
+                account.currentBalance += req.body.amount;
+                account.save((err, account) => {
+                    if (err) {
+                        res.statusCode = 500;
+                        res.setHeader('Content-Type', 'application/json');
+                        res.json({err: err});
+                      }
+                });
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
                 res.json(transaction);
             }, err => next(err))
             .catch((err) => {next(err)});
+        })
+            
     }, err => next(err))
     .catch((err) => {next(err)});
 });
@@ -102,25 +111,26 @@ transactionRouter.post('/deposit', authenticate.verifyUser, (req, res, next) => 
 //Take amount, recipient account number and transaction type as input
 //Use the /get account router to show the user his account Number list via a drop down menu from which he will make a transaction. 
 transactionRouter.post('/transfer', authenticate.verifyUser, (req, res, next) => {
-    Account.findOne({accountNo: req.body.accountNo})
-    .then((account) => {
-        if (req.body.amount <= account.currentBalance) {
-            Transaction.create({senderAcount: account._id, Amount: req.body.amount, transactionType: "Transfer"})
-            .then((transaction) => {
-                Account.findOne({recipientAccount: req.body.recipientAccount})
+    User.findById(req.user._id)
+    .then((user) => {
+        Account.findById(user.account)
+        .then((account) => {
+            if (account.currentBalance >= req.body.amount) {
+                Account.findOne({accountNo: req.body.recipientAccount})
                 .then((account1) => {
-                    if (account1 != null) {
+                    if (account1) {
+                        Transaction.create({senderAccount: account._id, Amount: req.body.amount, transactionType: "Account Transfer", recipientAccount: account1._id})
+                        .then((transaction) => {
                         if (req.body.description)
                         transaction.description = req.body.description;
-                        transaction.recipientAccount= account1._id;
                         transaction.save((err, transaction) => {
                             if (err) {
                                 res.statusCode = 500;
                                 res.setHeader('Content-Type', 'application/json');
                                 res.json({err: err});
                             }
-                            });
-                        account.currentBalance =- req.body.amount;
+                        });
+                        account.currentBalance -= req.body.amount;
                         account.save((err, account) => {
                             if (err) {
                                 res.statusCode = 500;
@@ -128,8 +138,8 @@ transactionRouter.post('/transfer', authenticate.verifyUser, (req, res, next) =>
                                 res.json({err: err});
                             }
                         });
-                        account1.currentBalance =+ req.body.amount;
-                        account1.save((err, account1) => {
+                        account1.currentBalance += req.body.amount;
+                        account1.save((err, account) => {
                             if (err) {
                                 res.statusCode = 500;
                                 res.setHeader('Content-Type', 'application/json');
@@ -139,24 +149,28 @@ transactionRouter.post('/transfer', authenticate.verifyUser, (req, res, next) =>
                         res.statusCode = 200;
                         res.setHeader('Content-Type', 'application/json');
                         res.json(transaction);
-                    } 
-                    else {
-                        err = new Error("Recipient Account Number does not exist");
-                        err.status = 403;
-                        return next(err);
+                        }, err => next(err))
+                        .catch((err) => {next(err)});
                     }
-                }, err => next(err))
-                .catch((err) => {next(err)});
+                    else {
+                        res.statusCode = 403;
+                        res.setHeader('Content-Type', 'application/json');
+                        res.json({err: ""});
+                    }
+                  
             }, err => next(err))
             .catch((err) => {next(err)});
-        }
-        else {
-            err = new Error("You do not have sufficient balance");
-            err.status = 403;
-            return next(err);
-        }
+                
+            }
+            else {
+                res.statusCode = 403;
+                res.setHeader('Content-Type', 'application/json');
+                res.json({err: "Account not found"});
+            }
+        })
+            
     }, err => next(err))
-    .catch((err) => {next(err)}); 
+    .catch((err) => {next(err)});
 });
 
 module.exports = transactionRouter;

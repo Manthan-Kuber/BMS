@@ -6,8 +6,14 @@ class Deposit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      amount: 0
+      amount: 0,
+      token: ""
     };
+  }
+
+  componentDidMount() {
+    console.log(localStorage.getItem("token"));
+    this.setState({token: localStorage.getItem("token")})
   }
 
   submit_task(data) {
@@ -15,7 +21,7 @@ class Deposit extends Component {
       method: "POST",
       headers: {
         'Content-Type': "application/json",
-        'Authorization': `bearer` 
+        'Authorization': `Bearer ${this.state.token}` 
       },
       body: JSON.stringify(data),
     }).then((res) => {
@@ -49,7 +55,6 @@ class Deposit extends Component {
                     name="deposit"
                     class="form-control"
                     placeholder="Enter Amount"
-                    value={this.state.amount}
                   />
                 </div>
               </div>
