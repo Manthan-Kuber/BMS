@@ -42,18 +42,14 @@ class SignUp extends Component {
     });
   };
   submit_task(data) {
-    fetch("http://localhost:3001/users/signup", {
+    fetch("http://localhost:3000/users/signup", {
       method: "POST",
       headers: {
         'Content-Type': "application/json",
       },
       body: JSON.stringify(data),
-    }).then((response) => {
-      if (response.success && response.success === true) {
-        alert(response.status);
-      } else {
-        alert(response.err);
-      }
+    }).then((json) => {
+      alert(json.json());
     });
   }
   handleBlur = (field) => (evt) => {

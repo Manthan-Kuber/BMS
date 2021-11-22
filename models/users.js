@@ -19,7 +19,7 @@ var User = new Schema({
         type: String,
         default: ''
     },
-    Contact: {
+    contact: {
         type: String,
         default: ''
     },
@@ -32,12 +32,14 @@ var User = new Schema({
         default: ''
     },
     age: {
-        type: Number
+        type: Number,
+        min: 18
     },
-    accounts: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Account'
-    }]
+    accounts: {
+        type: [ mongoose.Schema.Types.ObjectId ],
+        ref: 'Account',
+        default: []
+    }
 });
 
 User.plugin(passportLocalMongoose);

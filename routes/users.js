@@ -17,8 +17,7 @@ router.post('/signup', (req, res, next) => {
     if (err) {
       res.statusCode = 500;
       res.setHeader('Content-Type', 'application/json');
-      // res.json({err: err});
-      return next(err);
+      res.json({err: err});
     }
     else {
       // var age = Math.floor( yearsFromNow( req.body.dob ) );
@@ -31,10 +30,11 @@ router.post('/signup', (req, res, next) => {
       user.lastname = req.body.lastname;
       user.aadharNo = req.body.aadharNo;
       user.emailAddress = req.body.emailAddress;
-      user.Contact = req.body.Contact;
+      user.contact = req.body.contact;
       user.address = req.body.address;
       user.dob = req.body.dob;
-      // user.age = age;
+      user.accounts = [];
+      user.age = 18;
       user.save((err, user) => {
         if (err) {
           res.statusCode = 500;
@@ -44,12 +44,14 @@ router.post('/signup', (req, res, next) => {
         passport.authenticate('local')(req, res, () => {
           res.statusCode = 200;
           res.setHeader('Content-Type', 'application/json');
-          res.json({success: true, status: 'Registeration Successful!'});
+          res.end(JSON.stringify({success: true, status: 'Registration Successful!'}));
+          console.log(res);
       });
       });
     }
   });
 });
+
 
 router.post('/login', passport.authenticate('local'),
 (req, res) => {
