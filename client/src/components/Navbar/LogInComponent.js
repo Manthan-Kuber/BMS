@@ -11,7 +11,7 @@ class LogIn extends Component {
       <>
         <Header />
         <div class="container" id="signup-form">
-          <form action="#" method="" id="signup-form">
+          <form action="post" method="" id="signup-form">
             <h2>Login</h2>
             <br />
             <div class="form-group">

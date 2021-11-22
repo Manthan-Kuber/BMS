@@ -11,7 +11,7 @@ class User extends Component {
             <div className="accountUser">
                 User 
                 <div className="accountDetails">
-                user1@email // account number // account balance
+                  user1@email // account number // account balance
                 </div>
                 <div className="actions">
                     <span>

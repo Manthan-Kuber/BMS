@@ -6,7 +6,7 @@ function Header(props) {
     <header>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
-          <NavLink className="nav-link" to="/home">
+          <NavLink className="nav-link" to="/">
             <em class="bi bi-bank2"></em> Bank Management System
           </NavLink>
           <div className="collapse navbar-collapse " id="navbarNav">
