@@ -5,33 +5,31 @@ var passportLocalMongoose = require('passport-local-mongoose');
 const userSchema = new Schema({
     firstname: {
         type: String,
-        required: true
+        default: ''
     },
     lastname: {
         type: String,
-        required: true
+        default: ''
     },
     aadharNo: {
         type: String,
-        minlength: 12,
-        maxLength:12,
-        required: true
+        default: ''
     },
     emailAddress: {
         type: String,
-        required: true
+        default: ''
     },
     Contact: {
-        type: Number,
-        required: true
+        type: String,
+        default: ''
     },
     address: {
         type: String,
-        required: true
+        default: ''
     },
     dob: {
         type: String,
-        required: true
+        default: ''
     },
     age: {
         type: Number

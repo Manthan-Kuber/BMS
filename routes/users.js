@@ -26,14 +26,14 @@ router.post('/signup', (req, res, next) => {
         err.status = 403;
         return next(err);
       }
-      user.dob = req.body.dob;
-      user.age = age;
       user.firstname = req.body.firstname;
       user.lastname = req.body.lastname;
       user.aadharNo = req.body.aadharNo;
       user.emailAddress = req.body.emailAddress;
       user.Contact = req.body.Contact;
       user.address = req.body.address;
+      user.dob = req.body.dob;
+      user.age = age;
       user.save((err, user) => {
         if (err) {
           res.statusCode = 500;

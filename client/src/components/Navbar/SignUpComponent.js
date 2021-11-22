@@ -31,8 +31,6 @@ class SignUp extends Component {
   }
   handleSignUp = (event) => {
     event.preventDefault();
-    alert(this.state.firstname + this.state.lastname);
-    console.log(this.state.firstname + this.state.lastname);
     this.submit_task(this.state);
   };
   handleInputChange = (event) => {
@@ -64,49 +62,52 @@ class SignUp extends Component {
       touched: { ...this.state.touched, [field]: true },
     });
   };
-  validate(firstname, lastname, emailAddress, aadharNo, Contact, password) {
+  validate(firstname, lastname,emailAddress, dob, aadharNo, Contact, address, password) {
     const errors = {
       firstname: "",
       lastname: "",
-      dob: "",
       emailAddress: "",
+      dob: "",
       aadharNo: "",
       Contact: "",
       address: "",
-      password: "",
+      password: ""
     };
 
-    if (this.state.touched.firstname && firstname.length < 3) {
+    if (this.state.touched.firstname && this.state.firstname.length < 3) {
       errors.firstname = "First Name should be >= to 3 characters";
-    } else if (this.state.touched.firstname && firstname.length > 10) {
+    } else if (this.state.touched.firstname && this.state.firstname.length > 10) {
       errors.firstname = "First Name should be <= to 10 characters";
     }
 
-    if (this.state.touched.lastname && lastname.length < 3) {
+    if (this.state.touched.lastname && this.state.lastname.length < 3) {
       errors.lastname = "Last Name should be >= to 3 characters";
-    } else if (this.state.touched.lastname && lastname.length > 10) {
+    } else if (this.state.touched.lastname && this.state.lastname.length > 10) {
       errors.lastname = "Last Name should be <= to 10 characters";
     }
 
     // Regular expression to ensure that the telephone number only consists of integers
     const reg = /^[\d]*$/;
-    if (this.state.touched.Contact && !reg.test(Contact)) {
-      errors.Contact = "Tel. Number should contain only numbers";
-    } else if (this.state.touched.Contact && Contact.length !== 10) {
-      errors.Contact = "Tel. Number should contain exactly 10 digits";
+    if (this.state.touched.Contact && !reg.test(this.state.Contact)) {
+      errors.Contact = "Contact Number should contain only numbers";
+    } else if (this.state.touched.Contact && this.state.Contact.length !== 10) {
+      errors.Contact = "Contact Number should contain exactly 10 digits";
     }
 
-    if (this.state.touched.aadharNo && !reg.test(aadharNo)) {
+    if (this.state.touched.aadharNo && !reg.test(this.state.aadharNo)) {
       errors.aadharNo = "Aadhar Number should contain only numbers";
-    } else if (this.state.touched.aadharNo && aadharNo.length !== 11) {
-      errors.aadharNo = "Aadhar Number should contain exactly 11 digits";
+    } else if (this.state.touched.aadharNo && this.state.aadharNo.length !== 12) {
+      errors.aadharNo = "Aadhar Number should contain exactly 12 digits";
     }
 
-    if (
-      this.state.touched.emailAddress &&
-      emailAddress.split("").filter((x) => x === "@").length !== 1
-    ) {
-      errors.emailAddress = "Email should contain a @";
+    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (this.state.touched.emailAddress && !validRegex.test(this.state.emailAddress)) {
+      errors.emailAddress = "Invalid Email Address";
+    }
+
+    var pattern =/^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/;
+    if (this.state.touched.dob && !pattern.test(this.state.dob)) {
+      errors.dob = "Invalid Date";
     }
 
     return errors;
@@ -116,13 +117,12 @@ class SignUp extends Component {
     const errors = this.validate(
       this.state.firstname,
       this.state.lastname,
-      this.state.dob,
       this.state.emailAddress,
+      this.state.dob,
       this.state.aadharNo,
       this.state.Contact,
       this.state.address,
       this.state.password,
-      this.stat
     );
     return (
       <>
@@ -184,10 +184,13 @@ class SignUp extends Component {
                 <div class="mb-3 col-md-6">
                   <label for="dob">Date Of Birth</label>
                   <input
-                    type="date"
+                    type="text"
                     id="dob"
                     name="dob"
                     class="form-control"
+                    placeholder="dd/mm/yyyy"
+                    onChange={this.handleInputChange}
+                    onBlur={this.handleBlur("dob")}
                     value={this.state.dob}
                     valid={errors.dob === ""}
                     invalid={errors.dob !== ""}
