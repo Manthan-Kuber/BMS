@@ -2,7 +2,6 @@ import { React, Component } from "react";
 import Footer from "../FooterComponent";
 import Header from "../HeaderComponent";
 
-
 class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -28,12 +27,13 @@ class SignUp extends Component {
     };
     this.handleSignUp = this.handleSignUp.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
   }
   handleSignUp = (event) => {
     event.preventDefault();
     alert(this.state.firstname + this.state.lastname);
     console.log(this.state.firstname + this.state.lastname);
-    // this.submit_task(this.state);
+    this.submit_task(this.state);
   };
   handleInputChange = (event) => {
     event.preventDefault();
@@ -51,21 +51,20 @@ class SignUp extends Component {
         content_type: "application/json",
       },
       body: JSON.stringify(data),
-    }).then((response) => response.json());
+    }).then((response) => {
+      if (response.success && response.success === true) {
+        alert(response.status);
+      } else {
+        alert(response.err);
+      }
+    });
   }
   handleBlur = (field) => (evt) => {
     this.setState({
       touched: { ...this.state.touched, [field]: true },
     });
   };
-  validate(
-    firstname,
-    lastname,
-    emailAddress,
-    aadharNo,
-    Contact,
-    password,
-  ) {
+  validate(firstname, lastname, emailAddress, aadharNo, Contact, password) {
     const errors = {
       firstname: "",
       lastname: "",
@@ -109,8 +108,7 @@ class SignUp extends Component {
     ) {
       errors.emailAddress = "Email should contain a @";
     }
-    
-    
+
     return errors;
   }
 
@@ -149,7 +147,7 @@ class SignUp extends Component {
                     valid={errors.firstname === ""}
                     invalid={errors.firstname !== ""}
                   />
-                  <small style={{color:'red'}}>{errors.firstname}</small>
+                  <small style={{ color: "red" }}>{errors.firstname}</small>
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="lastname">Last Name</label>
@@ -165,7 +163,7 @@ class SignUp extends Component {
                     valid={errors.lastname === ""}
                     invalid={errors.lastname !== ""}
                   />
-                  <small style={{color:'red'}}>{errors.lastname}</small>
+                  <small style={{ color: "red" }}>{errors.lastname}</small>
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="emailAddress">Email</label>
@@ -181,7 +179,7 @@ class SignUp extends Component {
                     valid={errors.emailAddress === ""}
                     invalid={errors.emailAddress !== ""}
                   />
-                  <small style={{color:'red'}}>{errors.emailAddress}</small>
+                  <small style={{ color: "red" }}>{errors.emailAddress}</small>
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="dob">Date Of Birth</label>
@@ -194,7 +192,7 @@ class SignUp extends Component {
                     valid={errors.dob === ""}
                     invalid={errors.dob !== ""}
                   />
-                  <small style={{color:'red'}}>{errors.dob}</small>
+                  <small style={{ color: "red" }}>{errors.dob}</small>
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="aadharNo">Aadhar Number</label>
@@ -210,7 +208,7 @@ class SignUp extends Component {
                     valid={errors.aadharNo === ""}
                     invalid={errors.aadharNo !== ""}
                   />
-                  <small style={{color:'red'}}>{errors.aadharNo}</small>
+                  <small style={{ color: "red" }}>{errors.aadharNo}</small>
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="Contact">Contact Number</label>
@@ -226,7 +224,7 @@ class SignUp extends Component {
                     valid={errors.Contact === ""}
                     invalid={errors.Contact !== ""}
                   />
-                  <small style={{color:'red'}}>{errors.Contact}</small>
+                  <small style={{ color: "red" }}>{errors.Contact}</small>
                 </div>
               </div>
             </div>
@@ -245,7 +243,7 @@ class SignUp extends Component {
                   valid={errors.address === ""}
                   invalid={errors.address !== ""}
                 ></textarea>
-                <small style={{color:'red'}}>{errors.address}</small>
+                <small style={{ color: "red" }}>{errors.address}</small>
               </div>
             </div>
             <div class="form-group">
@@ -263,11 +261,15 @@ class SignUp extends Component {
                   valid={errors.password === ""}
                   invalid={errors.password !== ""}
                 />
-                <small style={{color:'red'}}>{errors.password}</small>
+                <small style={{ color: "red" }}>{errors.password}</small>
               </div>
             </div>
             <div className="col-md-12 text-center ">
-              <button type="submit" class="btn btn-dark align-center">
+              <button
+                type="submit"
+                class="btn btn-dark align-center"
+                onClick={this.handleSignUp}
+              >
                 Submit
               </button>
             </div>
