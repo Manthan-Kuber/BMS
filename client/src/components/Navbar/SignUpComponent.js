@@ -42,11 +42,10 @@ class SignUp extends Component {
     });
   };
   submit_task(data) {
-    fetch("http://localhost:3000/users/signup", {
+    fetch("http://localhost:3001/users/signup", {
       method: "POST",
-      cache: "no-cache",
       headers: {
-        content_type: "application/json",
+        'Content-Type': "application/json",
       },
       body: JSON.stringify(data),
     }).then((response) => {
@@ -127,8 +126,9 @@ class SignUp extends Component {
     return (
       <>
         <Header />
+        {/* OnSubmit Added here */}
         <div class="container">
-          <form id="signupForm">
+          <form onSubmit={(data) => this.handleSignUp(data)} id="signupForm">
             <h2>Sign up</h2>
             <br />
             <div class="form-group">
@@ -271,7 +271,6 @@ class SignUp extends Component {
               <button
                 type="submit"
                 class="btn btn-dark align-center"
-                onClick={this.handleSignUp}
               >
                 Submit
               </button>

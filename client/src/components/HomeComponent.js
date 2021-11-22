@@ -1,7 +1,6 @@
 import { React, Component } from "react";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
-import Dashboard from "./Dashboard/DashboardComponent"
 
 class Home extends Component {
   constructor(props) {
