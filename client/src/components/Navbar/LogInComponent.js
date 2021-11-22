@@ -8,6 +8,7 @@ class LogIn extends Component {
     this.state = {
       emailAddress: "",
       password: "",
+      token: "",
       touched: {
         emailAddress: false,
       },
@@ -31,18 +32,22 @@ class LogIn extends Component {
   };
 
   submit_task(data) {
-    fetch("http://localhost:3001/users/login", {
+    fetch("http://localhost:3000/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    }).then((response) => {
-      if (response.success && response.success === true) {
-        alert(response.status);
-      } else {
-        alert(response.err);
-      }
+    }).then((res) => {
+      res.json().then(result => {
+        if (result.success) {
+          this.setState({token: result.token});
+          alert(result.status + " " + result.token);
+        }
+        else {
+          alert("Error");
+        }
+      }); 
     });
   }
 

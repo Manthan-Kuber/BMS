@@ -48,8 +48,15 @@ class SignUp extends Component {
         'Content-Type': "application/json",
       },
       body: JSON.stringify(data),
-    }).then((json) => {
-      alert(json.json());
+    }).then((res) => {
+      res.json().then(result => {
+        if (result.success) {
+          alert(result.status);
+        }
+        else {
+          alert("Error");
+        }
+      }); 
     });
   }
   handleBlur = (field) => (evt) => {
