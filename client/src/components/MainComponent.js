@@ -2,7 +2,8 @@ import { React, Component } from "react";
 import Home from "./HomeComponent";
 import SignUp from "./Navbar/SignUpComponent";
 import LogIn from "./Navbar/LogInComponent";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router,Route,Routes}from "react-router-dom";
+import Dashboard from "./Dashboard/DashboardComponent";
 
 class Main extends Component {
   constructor(props) {
@@ -11,11 +12,11 @@ class Main extends Component {
   render() {
     return (
       <>
-        
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<LogIn />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </>
     );

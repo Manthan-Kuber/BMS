@@ -11,7 +11,6 @@ class Home extends Component {
     return (
       <>
         <Header />
-        <Dashboard />
         <div class="section-container">
           <p> The site is under construction, Sorry for the inconvenience.</p>
         </div>

@@ -178,27 +178,6 @@ nav i {
     border-radius: 0;
   }
   
-  .btn {
-    width: 100%;
-    margin-top: 25px;
-    margin-bottom: 5px;
-    height: 38px;
-    border: none;
-    outline: none;
-    border-radius: 20px;
-    background-color: #727171;
-    font-size: 16px;
-    font-weight: 500;
-    color: #ffffff;
-    cursor: pointer;
-    box-shadow: -5px -5px 8px #d8e2e6, 5px 5px 10px #2c313378;
-    transition: 0.8s;
-  }
-  
-  .btn:hover {
-    background-color: #ecf0f6;
-    box-shadow: inset 5px 5px 10px #d8e2e2, inset -5px -5px 10px #d8e2e6;
-  }
   
   /* .social {
     display: flex;
@@ -307,22 +286,6 @@ nav i {
     text-align: center;
     flex: 1;
     margin-top: 30px;
-    margin-inline: 30rem;
-  }
-
-  .actions {
-    display: grid;
-    grid-template-columns: repeat(4, auto);
-    grid-gap: 10px;
-    list-style: none;
-    text-align: center; 
-    justify-content: center;
-    width: 24rem;
-  }
-
-  .actions li {
-    border: 2px solid black;
-    padding: 5px;
   }
 
   .accountUser {
@@ -340,6 +303,4 @@ nav i {
     margin: 10px;
     background-color: #ecf0f3;
     outline: none;
-    border-radius: 20px;
-    box-shadow: inset 5px 5px 5px #cbced1, inset -5px -2px 5px #999898;
   }

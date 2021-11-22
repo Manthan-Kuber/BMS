@@ -1,4 +1,6 @@
 import { React, Component } from "react";
+import Footer from "../FooterComponent";
+import Header from "../HeaderComponent";
 import User from "./UserComponent";
 
 class Dashboard extends Component {
@@ -8,11 +10,11 @@ class Dashboard extends Component {
   render() {
     return (
       <> 
+      <Header />
         <div className="section-main">
             <User />
-            <User />
-            <User />
       </div>
+      <Footer />
       </>
     );
   }
