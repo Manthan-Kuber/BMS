@@ -30,7 +30,7 @@ transactionRouter.get('/', authenticate.verifyUser, (req, res, next) => {
 //Take amount and transaction type as input
 //Use the /get account router to show the user his account Number list via a drop down menu from which he will make a transaction. 
 transactionRouter.post('/withdraw', authenticate.verifyUser, (req, res, next) => {
-    const amount = Number(req.body.amount); 
+    const amount = parseInt(req.body.amount);
     User.findById(req.user._id)
     .then((user) => {
         Account.findById(user.account)
@@ -117,15 +117,16 @@ transactionRouter.post('/deposit', authenticate.verifyUser, (req, res, next) => 
 //Take amount, recipient account number and transaction type as input
 //Use the /get account router to show the user his account Number list via a drop down menu from which he will make a transaction. 
 transactionRouter.post('/transfer', authenticate.verifyUser, (req, res, next) => {
+    const amount = parseInt(req.body.amount);
     User.findById(req.user._id)
     .then((user) => {
         Account.findById(user.account)
         .then((account) => {
-            if (account.currentBalance >= req.body.amount) {
+            if (account.currentBalance >= amount) {
                 Account.findOne({accountNo: req.body.recipientAccount})
                 .then((account1) => {
                     if (account1) {
-                        Transaction.create({senderAccount: account._id, Amount: req.body.amount, transactionType: "Account Transfer", recipientAccount: account1._id})
+                        Transaction.create({senderAccount: account._id, amount: amount, transactionType: "Account Transfer", recipientAccount: account1._id})
                         .then((transaction) => {
                         if (req.body.description)
                         transaction.description = req.body.description;
@@ -136,7 +137,7 @@ transactionRouter.post('/transfer', authenticate.verifyUser, (req, res, next) =>
                                 res.json({err: err});
                             }
                         });
-                        account.currentBalance -= req.body.amount;
+                        account.currentBalance -= amount;
                         account.save((err, account) => {
                             if (err) {
                                 res.statusCode = 500;
@@ -144,7 +145,7 @@ transactionRouter.post('/transfer', authenticate.verifyUser, (req, res, next) =>
                                 res.json({err: err});
                             }
                         });
-                        account1.currentBalance += req.body.amount;
+                        account1.currentBalance += amount;
                         account1.save((err, account) => {
                             if (err) {
                                 res.statusCode = 500;
