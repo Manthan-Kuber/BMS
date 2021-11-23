@@ -1,10 +1,8 @@
 import { React, useState } from "react";
 import Footer from "../FooterComponent";
 import Header from "../HeaderComponent";
-// import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-
 
 
 export default function LogIn() {
@@ -19,7 +17,7 @@ export default function LogIn() {
  
 
   function handleClick() {
-    var data = {emailAddress: emailAddress,password:password}
+    var data = {emailAddress: emailAddress, password:password}
       fetch("http://localhost:3000/users/login", {
         method: "POST",
         headers: {

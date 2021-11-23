@@ -8,7 +8,7 @@ const TransactionSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Account'
     },
-    Amount: {
+    amount: {
         type: Currency,
         min: 0,
         required: true

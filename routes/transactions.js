@@ -30,12 +30,13 @@ transactionRouter.get('/', authenticate.verifyUser, (req, res, next) => {
 //Take amount and transaction type as input
 //Use the /get account router to show the user his account Number list via a drop down menu from which he will make a transaction. 
 transactionRouter.post('/withdraw', authenticate.verifyUser, (req, res, next) => {
+    const amount = Number(req.body.amount); 
     User.findById(req.user._id)
     .then((user) => {
         Account.findById(user.account)
         .then((account) => {
-            if (account.currentBalance >= req.body.amount) {
-                Transaction.create({senderAccount: account._id, Amount: req.body.amount, transactionType: "Withdraw"})
+            if (account.currentBalance >= amount) {
+                Transaction.create({senderAccount: account._id, amount: amount, transactionType: "Withdraw"})
                 .then((transaction) => {
                 if (req.body.description)
                 transaction.description = req.body.description;
@@ -46,7 +47,7 @@ transactionRouter.post('/withdraw', authenticate.verifyUser, (req, res, next) =>
                         res.json({err: err});
                       }
                 });
-                account.currentBalance -= req.body.amount;
+                account.currentBalance -= amount;
                 account.save((err, account) => {
                     if (err) {
                         res.statusCode = 500;
@@ -65,7 +66,8 @@ transactionRouter.post('/withdraw', authenticate.verifyUser, (req, res, next) =>
                 res.setHeader('Content-Type', 'application/json');
                 res.json({err: "You have insufficient balance"});
             }
-        })
+        }, err => next(err))
+        .catch((err) => {next(err)});
             
     }, err => next(err))
     .catch((err) => {next(err)});
@@ -74,11 +76,15 @@ transactionRouter.post('/withdraw', authenticate.verifyUser, (req, res, next) =>
 //Take amount and transaction type as input
 //Use the /get account router to show the user his account Number list via a drop down menu from which he will make a transaction. 
 transactionRouter.post('/deposit', authenticate.verifyUser, (req, res, next) => {
+    const amount = parseInt(req.body.amount);
+    console.log(typeof(amount));
+    console.log(req.body);
+    console.log(amount);
     User.findById(req.user._id)
     .then((user) => {
         Account.findById(user.account)
         .then((account) => {
-                Transaction.create({senderAccount: account._id, Amount: req.body.amount, transactionType: "Deposit"})
+                Transaction.create({senderAccount: account._id, amount: amount, transactionType: "Deposit"})
                 .then((transaction) => {
                 if (req.body.description)
                 transaction.description = req.body.description;
@@ -89,7 +95,7 @@ transactionRouter.post('/deposit', authenticate.verifyUser, (req, res, next) => 
                         res.json({err: err});
                       }
                 });
-                account.currentBalance += req.body.amount;
+                account.currentBalance += amount;
                 account.save((err, account) => {
                     if (err) {
                         res.statusCode = 500;

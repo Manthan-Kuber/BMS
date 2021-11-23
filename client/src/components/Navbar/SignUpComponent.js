@@ -49,6 +49,7 @@ class SignUp extends Component {
         'Content-Type': "application/json",
       },
       body: JSON.stringify(data),
+
     }).then((res) => {
       res.json().then(result => {
         if (result.success) {
