@@ -77,5 +77,16 @@ router.get('/logout', (req, res, next) => {
   res.redirect('/');
 });
 
+router.get('/details', authenticate.verifyUser, (req, res, next) => {
+  User.findById(req.user._id)
+  .then((user) => {
+    Account.findById(user.account)
+    .then((account) => {
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      res.json({emailAddress: user.emailAddress, accountNo: account.accountNo, currentBalance: account.currentBalance, firstname: user.firstname, lastname: user.lastname})
+    })
+  })
+})
 
 module.exports = router;
