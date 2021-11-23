@@ -65,12 +65,39 @@ router.post('/signup', (req, res, next) => {
 });
 
 
-router.post('/login', passport.authenticate('local'),
-(req, res) => {
-  var token = authenticate.getToken({_id: req.user._id})
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'application/json');
-  res.json({success: true, token: token, status: 'You are successfully logged in!'});
+router.post('/login',(req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if(err) {
+      return next(err);
+    }
+    if (!user) {
+      res.statusCode = 401;
+      res.setHeader('Content-type', 'application/json')
+      res.json({
+        success: false,
+        status: "Log-in Unsuccessful!"});
+    }
+    req.logIn(user, (err) => {
+      if(err) {
+        res.statusCode = 401;
+        res.setHeader('Content-type', 'application/json')
+        res.json({
+          success: false, 
+          status: "Login unsuccessful!",
+          err: "Coundn't Login user."});
+      }
+
+      var token = authenticate.getToken({_id: req.user._id});
+      res.statusCode = 200;
+      res.setHeader('Content-type', 'application/json')
+      res.json({
+        success: true, 
+        token: token,
+        status: "You are successfully logged-in!"
+      });
+
+    })
+  }) (req, res, next);
 });
 
 router.get('/logout', (req, res, next) => {
@@ -84,7 +111,7 @@ router.get('/details', authenticate.verifyUser, (req, res, next) => {
     .then((account) => {
       res.statusCode = 200;
       res.setHeader('Content-Type', 'application/json');
-      res.json({emailAddress: user.emailAddress, accountNo: account.accountNo, currentBalance: account.currentBalance, firstname: user.firstname, lastname: user.lastname})
+      res.json({emailAddress: user.emailAddress, accountNo: account.accountNo, currentBalance: account.currentBalance, firstname: user.firstname, lastname: user.lastname});
     })
   })
 })
