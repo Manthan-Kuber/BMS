@@ -12,7 +12,8 @@ class Dashboard extends Component {
       <> 
       <Header />
         <div className="section-main">
-            <User />
+          <h1>User Dashboard</h1>
+          <User />
       </div>
       <Footer />
       </>

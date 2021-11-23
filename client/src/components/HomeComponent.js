@@ -1,6 +1,7 @@
 import { React, Component } from "react";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
+import homepage from "../images/homepage.jpg"
 
 class Home extends Component {
   constructor(props) {
@@ -11,7 +12,10 @@ class Home extends Component {
       <>
         <Header />
         <div class="section-container">
-          <p> The site is under construction, Sorry for the inconvenience.</p>
+          <div class="container-fluid">
+            <h1 class="text-center"> WELCOME TO BANK MANAGEMENT SYSTEM</h1>
+            <img src={homepage} class="img-fluid" alt='home page pic' />
+          </div>
         </div>
         <Footer />
       </>

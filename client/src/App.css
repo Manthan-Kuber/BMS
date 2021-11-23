@@ -32,7 +32,7 @@ nav i {
   flex: auto;
   box-sizing: border-box;
   padding: 60px 40px;
-  width: 70vh;
+  width: auto;
   margin-top: 1em;
   border-radius: 35px;
   background-color: #ecf0f3;
@@ -220,7 +220,7 @@ nav i {
     align-content: center;
     justify-content: center;
     height: inherit;
-    color: #858686;
+    color: black;
     margin: 2rem;
     background-color: #ecf0f3;
     outline: none;

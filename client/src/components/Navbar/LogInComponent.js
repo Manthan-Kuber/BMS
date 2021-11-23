@@ -41,34 +41,37 @@ export default function LogIn() {
   return (
     <>
       <Header />
-      <div class="container">
-        <div class="row">
-          <div class="mb-3 col-md-6">
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <label htmlFor="emailAddress">Email</label>
-              <input
-                type="text"
-                name='emailAddress'
-                placeholder="emailAddress"
-                onChange={e => setemailAddress(e.target.value)}
-              />
-              <label htmlFor="passowrd">Password</label>
-              <input
-                type="password"
-                name='password'
-                placeholder="password"
-                onChange={e => setpassword(e.target.value)}
-              />
-              <button
-                type="submit"
-                class="btn btn-dark align-center"
-                onClick={handleClick}
-              >
-                Submit
-              </button>
-            </form>
-          </div>
+      <div class="container justify-content-around">
+        <h2> Login </h2>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="mb-10 m-3 col-md-12 text-center">
+                <label htmlFor="emailAddress">Email</label>
+                <input
+                  type="text"
+                  name='emailAddress'
+                  placeholder="Email"
+                  onChange={e => setemailAddress(e.target.value)}
+                />
+                <label htmlFor="passowrd">Password</label>
+                <input
+                  type="password"
+                  name='password'
+                  placeholder="Password"
+                  onChange={e => setpassword(e.target.value)}
+                />
+                <button
+                  type="submit"
+                  class="btn btn-dark align-center"
+                  onClick={handleClick}
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
         </div>
+        </form>
       </div>
       <Footer />
     </>
